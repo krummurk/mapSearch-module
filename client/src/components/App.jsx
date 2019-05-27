@@ -38,6 +38,32 @@ class Map extends React.Component {
       map: [example]
     }
 
+    this.zagatSymbol_Overlay.prototype = new this.props.google.maps.OverlayView();
+    this.zagatSymbol_Overlay.prototype.onAdd = function () {
+      var div = document.createElement('div');
+      div.style.borderStyle = 'none';
+      div.style.borderWidth = '0px';
+      div.style.position = 'absolute';
+
+      // Create the img element and attach it to the div.
+      var img = document.createElement('img');
+      img.src = this.image_;
+      img.style.width = '100%';
+      img.style.height = '100%';
+      img.style.position = 'absolute';
+      div.appendChild(img);
+
+      this.div_ = div;
+
+      // Add the element to the "overlayLayer" pane.
+      var panes = this.getPanes();
+      panes.overlayLayer.appendChild(div);
+    };
+    this.zagatSymbol_Overlay = this.zagatSymbol_Overlay.bind(this);
+
+    this.searchByCity = this.searchByCity.bind(this);
+    this.renderPoints = this.renderPoints.bind(this);
+    this.loadMap = this.loadMap.bind(this);
   }
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.google !== this.props.google) {
@@ -62,7 +88,7 @@ class Map extends React.Component {
         this.setState({
           map: data
         }, () => {
-          this.renderPoints(data);
+          this.renderPoints(data, this.map);
         })
       },
       error: (err) => {
@@ -71,15 +97,49 @@ class Map extends React.Component {
     })
   }
 
-  renderPoints(data){
+
+  zagatSymbol_Overlay(bounds, position, image, map) {
+    // Initialize all properties.
+    this.bounds_ = bounds;
+    this.position_ = position;
+    this.image_ = image;
+    this.map_ = map;
+
+    // Define a property to hold the image's div. We'll
+    // actually create this div upon receipt of the onAdd()
+    // method so we'll leave it null for now.
+    this.div_ = null;
+
+    // Explicitly call setMap on this overlay.
+    this.setMap(map);
+  }
+
+  renderPoints(data, map) {
+
+    var srcImage = 'https://www.zagat.com/assets/img/z-logo-icon-red.svg'
+
     for (var i = 0; i < data.length; i++) {
       var coords = data[i];
-      var latLng = new google.maps.LatLng(coords.latitude,coords.longitude);
-      var marker = new google.maps.Marker({
+      var latLng = new this.props.google.maps.LatLng(coords.latitude, coords.longitude);
+      var bounds = new google.maps.LatLngBounds(
+        new google.maps.LatLng(coords.latitude, coords.longitude),
+        new google.maps.LatLng(coords.latitude + 0.2, coords.longitude + 0.2));
+
+      // var marker = new this.zagatSymbol_Overlay(bounds, latLng, srcImage, map);
+      // console.log('marker custom', marker);
+      // console.log(this.zagatSymbol_Overlay.prototype)
+
+      var marker = new this.props.google.maps.Marker({
         position: latLng,
-        map: this.map
+        map: map,
+        icon: {
+          url: 'https://www.zagat.com/assets/img/z-logo-icon-red.svg',
+          scaledSize: new google.maps.Size(30, 30)
+        }
       });
+
     }
+
 
   }
   loadMap() {
@@ -97,93 +157,170 @@ class Map extends React.Component {
         center: center,
         zoom: zoom,
         mapTypeId: 'roadmap',
-        styles: [
-          { elementType: 'geometry', stylers: [{ color: '#242f3e' }] },
-          { elementType: 'labels.text.stroke', stylers: [{ color: '#242f3e' }] },
-          { elementType: 'labels.text.fill', stylers: [{ color: '#746855' }] },
+        styles:
+        [
           {
-            featureType: 'administrative.locality',
-            elementType: 'labels.text.fill',
-            stylers: [{ color: '#d59563' }]
+            "elementType": "geometry",
+            "stylers": [
+              {
+                "color": "#f5f5f5"
+              }
+            ]
           },
           {
-            featureType: 'poi',
-            elementType: 'labels.text.fill',
-            stylers: [{ color: '#d59563' }]
+            "elementType": "labels.icon",
+            "stylers": [
+              {
+                "visibility": "off"
+              }
+            ]
           },
           {
-            featureType: 'poi.park',
-            elementType: 'geometry',
-            stylers: [{ color: '#263c3f' }]
+            "elementType": "labels.text.fill",
+            "stylers": [
+              {
+                "color": "#616161"
+              }
+            ]
           },
           {
-            featureType: 'poi.park',
-            elementType: 'labels.text.fill',
-            stylers: [{ color: '#6b9a76' }]
+            "elementType": "labels.text.stroke",
+            "stylers": [
+              {
+                "color": "#f5f5f5"
+              }
+            ]
           },
           {
-            featureType: 'road',
-            elementType: 'geometry',
-            stylers: [{ color: '#38414e' }]
+            "featureType": "administrative.land_parcel",
+            "elementType": "labels.text.fill",
+            "stylers": [
+              {
+                "color": "#bdbdbd"
+              }
+            ]
           },
           {
-            featureType: 'road',
-            elementType: 'geometry.stroke',
-            stylers: [{ color: '#212a37' }]
+            "featureType": "poi",
+            "elementType": "geometry",
+            "stylers": [
+              {
+                "color": "#eeeeee"
+              }
+            ]
           },
           {
-            featureType: 'road',
-            elementType: 'labels.text.fill',
-            stylers: [{ color: '#9ca5b3' }]
+            "featureType": "poi",
+            "elementType": "labels.text.fill",
+            "stylers": [
+              {
+                "color": "#757575"
+              }
+            ]
           },
           {
-            featureType: 'road.highway',
-            elementType: 'geometry',
-            stylers: [{ color: '#746855' }]
+            "featureType": "poi.park",
+            "elementType": "geometry",
+            "stylers": [
+              {
+                "color": "#e5e5e5"
+              }
+            ]
           },
           {
-            featureType: 'road.highway',
-            elementType: 'geometry.stroke',
-            stylers: [{ color: '#1f2835' }]
+            "featureType": "poi.park",
+            "elementType": "labels.text.fill",
+            "stylers": [
+              {
+                "color": "#9e9e9e"
+              }
+            ]
           },
           {
-            featureType: 'road.highway',
-            elementType: 'labels.text.fill',
-            stylers: [{ color: '#f3d19c' }]
+            "featureType": "road",
+            "elementType": "geometry",
+            "stylers": [
+              {
+                "color": "#ffffff"
+              }
+            ]
           },
           {
-            featureType: 'transit',
-            elementType: 'geometry',
-            stylers: [{ color: '#2f3948' }]
+            "featureType": "road.arterial",
+            "elementType": "labels.text.fill",
+            "stylers": [
+              {
+                "color": "#757575"
+              }
+            ]
           },
           {
-            featureType: 'transit.station',
-            elementType: 'labels.text.fill',
-            stylers: [{ color: '#d59563' }]
+            "featureType": "road.highway",
+            "elementType": "geometry",
+            "stylers": [
+              {
+                "color": "#dadada"
+              }
+            ]
           },
           {
-            featureType: 'water',
-            elementType: 'geometry',
-            stylers: [{ color: '#17263c' }]
+            "featureType": "road.highway",
+            "elementType": "labels.text.fill",
+            "stylers": [
+              {
+                "color": "#616161"
+              }
+            ]
           },
           {
-            featureType: 'water',
-            elementType: 'labels.text.fill',
-            stylers: [{ color: '#515c6d' }]
+            "featureType": "road.local",
+            "elementType": "labels.text.fill",
+            "stylers": [
+              {
+                "color": "#9e9e9e"
+              }
+            ]
           },
           {
-            featureType: 'water',
-            elementType: 'labels.text.stroke',
-            stylers: [{ color: '#17263c' }]
+            "featureType": "transit.line",
+            "elementType": "geometry",
+            "stylers": [
+              {
+                "color": "#e5e5e5"
+              }
+            ]
+          },
+          {
+            "featureType": "transit.station",
+            "elementType": "geometry",
+            "stylers": [
+              {
+                "color": "#eeeeee"
+              }
+            ]
+          },
+          {
+            "featureType": "water",
+            "elementType": "geometry",
+            "stylers": [
+              {
+                "color": "#B8D4DD"
+              }
+            ]
+          },
+          {
+            "featureType": "water",
+            "elementType": "labels.text.fill",
+            "stylers": [
+              {
+                "color": "#9e9e9e"
+              }
+            ]
           }
         ]
-
       })
       this.map = new maps.Map(node, mapConfig);
-
-
-
-
+      this.forceUpdate()
     }
   }
 
