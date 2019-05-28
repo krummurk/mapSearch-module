@@ -13,7 +13,6 @@ class Map extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      map: undefined,
       data: [example],
     }
 
@@ -42,7 +41,6 @@ class Map extends React.Component {
         data = JSON.parse(data);
         this.setState({
           data: data,
-          map: this.map
         }, () => {
         })
       },
@@ -239,7 +237,7 @@ class Map extends React.Component {
   }
 
   render() {
-    if (this.state.map !== undefined) {
+    if (this.map !== undefined) {
       return (
         <div id="refmap" ref='map'>
           <Marker data={this.state.data} map={this.map} />

@@ -33,8 +33,6 @@ const Flexcolumn = styled.div`
 `
 
 
-
-
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -56,12 +54,11 @@ class Container extends React.Component {
     if (!this.props.loaded) {
       return <div>Loading...</div>
     } else {
-      console.log('this page is loaded')
+      // console.log('this page is loaded')
       return (
         <StyleContainer>
           <Wrapper><Panel/></Wrapper>
           <Wrapper><Map google={this.props.google} city={this.props.match.params.name} /></Wrapper>
-          
         </StyleContainer>
       )
     }
