@@ -81,12 +81,34 @@ class Map extends React.Component {
     var srcImage = 'https://www.zagat.com/assets/img/z-logo-icon-red.svg';
     for (var i = 0; i < data.length; i++) {
       var newState = this.state.item;
-      newState.push(<Marker key={i.toString()} map={map} data={data} i={i}  
-      markers = {this.state.item}/>);
-      this.setState({
-        item: newState
-      })
+      newState.push({key: i.toString(),  map:map,  data: data, index:i, current:false})
+
+      // toggleLayer(i) {
+      //   var srcImage = 'https://www.zagat.com/assets/img/z-logo-icon-red.svg';
+
+      //   for (var j = 0; j < this.props.markers.length; j++) {
+      //     console.log('markers', this.props.markers[j]);
+      //     if (j !== i) {
+      //       console.log(google.maps)
+      //       this.props.markers[j].setIcon(
+      //           this.props.markers[j],
+      //         {
+      //           url: srcImage,
+      //           scaledSize: new google.maps.Size(20, 20)
+      //         }
+      //       )
+  
+      //     }
+      //   }
+      // }
+      // this.toggleLayer = this.toggleLayer.bind(this)
+
+
+
     }
+    this.setState({
+      item: newState
+    })
   }
 
 
@@ -275,7 +297,9 @@ class Map extends React.Component {
   render() {
     return (
       <div id="refmap" ref='map'>
-        {this.state.item}
+        {this.state.item.map( i=>
+          <Marker key={i.key} map={i.map} data={i.data} i={i.index} current={i.current}/>
+        )}
       </div>
     )
   }
