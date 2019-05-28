@@ -41,10 +41,11 @@ class Map extends React.Component {
       const maps = google.maps;
       const mapRef = this.refs.map;
       const node = ReactDOM.findDOMNode(mapRef);
-      let zoom = 14;
+      let zoom = 13;
       let lat = 37.774929;
       let lng = -122.419416;
-      const center = new maps.LatLng(lat, lng);
+      console.log(this.state.data[0].latitude, this.state.data[0].longitude);
+      const center = new maps.LatLng(this.state.data[0].latitude, this.state.data[0].longitude);
       const mapConfig = Object.assign({}, {
         center: center,
         zoom: zoom,

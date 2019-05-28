@@ -7,13 +7,24 @@ import GoogleApiComponent from '../../dist/lib/GoogleApiComponent.jsx';
 import ScriptCache from '../../dist/lib/ScriptCache.jsx';
 import GoogleMap_API from '../../../config_GoogleMapAPI.js';
 import example from './exampleData.js';
-import Marker from './Marker.jsx'
-import Map from './Map.jsx'
-import Panel from './Panel.jsx'
+import Map from './Map.jsx';
+import Panel from './Panel.jsx';
+import faker from 'faker';
+import { createGlobalStyle } from "styled-components";
+
+
+const GlobalStyles = createGlobalStyle`
+  body {
+    @import url('@import url('https://fonts.googleapis.com/css?family=Lato&display=swap');
+    font-family: 'Lato', sans-serif;
+  }
+`
 
 const StyleContainer = styled.div`
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+  height: 100vh
+  // overflow:hidden;
 `;
 const ZagatLogoPaths = styled.g`
 `;
@@ -30,33 +41,43 @@ const ZagatLogoBoxDiv = styled.div`
 const List = styled.section`
   padding: 0.75rem;
   margin: 0 0 0.25rem;
-  height: 800px;  /* The height is 400 pixels */
+  height: 80vh;  /* The height is 400 pixels */
   width: 50%;  /* The width is the width of the web page */
-  overflow-y: scroll;
+  overflow-y: auto;
 `;
 const MapStyle = styled.section`
   padding: 0.75rem;
   margin: 0 0 0.25rem;
-  height: 800px;  /* The height is 400 pixels */
+  // height: 100vh;  /* The height is 400 pixels */
   width: 50%;  /* The width is the width of the web page */
-  // overflow-y: scroll;
+  // overflow-y: auto;
+
+  // justify-items: stretch
+  // overflow: hidden;
 
 `;
-const Pink = styled.section`
-  color: pink;
-`
+const TopBar = styled.div`
+  background-color: white;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  height: 10vh;  /* The height is 400 pixels */
 
+`
 const Flexrow = styled.div`
   background-color: white;
   display: flex;
   flex-direction: row;
   justify-content: center;
+  height: 80vh;  /* The height is 400 pixels */
+
 
 `
 const Flexcolumn = styled.div`
   width: ${(props) => props.size / 2 * 100}vw;
   margin-left: 1rem;
   margin-right: 1rem;
+  flex-direction: column;
 `
 
 
@@ -109,11 +130,12 @@ class Container extends React.Component {
       return <div>Loading...</div>
     } else {
       return (
-        <div>
-          <Flexrow>
+        <StyleContainer>
+          <GlobalStyles/>
+          <TopBar>
             <Flexcolumn>
               <ZagatLogoBoxDiv>
-            <svg xmlns="http://www.w3.org/2000/svg"  width="250" height="150" viewBox="0 0 145 33">
+            <svg xmlns="http://www.w3.org/2000/svg"  width="250" height="100" viewBox="0 0 145 33">
                 <ZagatLogoPaths>
                   <ZagatLogoPaths>
                     <path d="M36.7 27.4L34.4 32.1 36.7 32.1 38.1 29.3 49.4 29.3 50.7 32.1 53.1 32.1 50.8 27.4 36.7 27.4"></path>
@@ -134,15 +156,13 @@ class Container extends React.Component {
               </svg>
               </ZagatLogoBoxDiv>
           </Flexcolumn>
-          </Flexrow>
+          </TopBar>
         <Flexrow>
           <List><Panel data={this.state.data} currentIndex={this.state.currentIndex} /></List>
           <MapStyle><Map google={this.props.google} city={this.props.match.params.name} data={this.state.data}
             updateCurrentIndex={this.updateCurrentIndex} /></MapStyle>
         </Flexrow>
-        </div >
-
-
+        </StyleContainer >
       )
     }
   }

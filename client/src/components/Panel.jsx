@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom'
 import styled from 'styled-components';
 import $ from 'jquery';
 import Entry from './Entry.jsx';
+import faker from 'faker';
 
 const Container = styled.div`
   display: flex;
@@ -21,9 +22,9 @@ class Panel extends React.Component {
     render() {
       var items = this.props.data.map( (i,idx)=> {
         if (this.props.currentIndex === idx) {
-          return <Entry entry = {i} name= {idx.toString()} key = {idx.toString()} currentIndex={true}/>
+          return <Entry entry = {i} name= {idx.toString()} key = {idx.toString()} currentIndex={true} />
         } else {
-          return <Entry entry = {i} name= {idx.toString()} key = {idx.toString()} currentIndex={false}/>
+          return <Entry entry = {i} name= {idx.toString()} key = {idx.toString()} currentIndex={false} />
         }
       })
       return (

@@ -5,7 +5,6 @@ mongoose.connect('mongodb://localhost/fetcher2');
 var resDesData = require('./res44Tehama.js');
 resDesData = resDesData[0].map((i) => {
     delete i.apiKey
-    delete i.logoUrl
     delete i.minFreeDelivery
     delete i.url
     delete i.API
@@ -110,6 +109,19 @@ for (let i = 0; i < resMenuData.length; i++) {
 
 resDesData = resDesData.map(i => {
     i.menus = menuSeed();
+    var foodPics = new Array(Math.floor(Math.random()*10)+1).fill(0);
+    foodPics = foodPics.map(i=> {
+        var randomSize = Math.floor(Math.random()*100);
+        var Size = 300+ randomSize;    
+        return "http://lorempixel.com/" + Size + '/'  + Size + "/food?"
+    });
+    i.foodUrl = foodPics;
+    if (i.neighborhood==='South of Market'){
+        i.neighborhood = 'SoMa';
+    }
+    i.foodR = Math.floor(Math.random() * 50)/10;
+    i.serviceR= Math.floor(Math.random() * 50)/10;
+    i.decorR = Math.floor(Math.random() * 50)/10;
     return i;
 })
 
@@ -152,7 +164,8 @@ var RestaurantSchema = mongoose.Schema({
     privatePartyContact: String,
     neighborhood: String,
     crossStreet: String,
-    menus: [MenuSchema]
+    menus: [MenuSchema],
+    foodUrl: [String]
 });
 
 var Restaurant = mongoose.model('Restaurant', RestaurantSchema);

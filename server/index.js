@@ -39,7 +39,7 @@ app.get('/API/map/:n', function(req, res) {
 // });
 
 
-app.listen(3005, function() {
-    console.log('listening on port 3005!');
+app.listen(3000, function() {
+    console.log('listening on port 3000!');
 });
 
