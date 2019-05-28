@@ -37,17 +37,21 @@ class Map extends React.Component {
     this.state = {
       map: [example],
       item: [],
-      targetTrue : []
+      targetTrue: [],
+      currentItem: 0
     }
 
     this.searchByCity = this.searchByCity.bind(this);
     this.renderPoints = this.renderPoints.bind(this);
     this.loadMap = this.loadMap.bind(this);
+    this.toggleLayer = this.toggleLayer.bind(this)
+
   }
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.google !== this.props.google) {
       this.loadMap();
     }
+    console.log('what?')
   }
 
   componentDidMount() {
@@ -81,36 +85,27 @@ class Map extends React.Component {
     var srcImage = 'https://www.zagat.com/assets/img/z-logo-icon-red.svg';
     for (var i = 0; i < data.length; i++) {
       var newState = this.state.item;
-      newState.push({key: i.toString(),  map:map,  data: data, index:i, current:false})
-
-      // toggleLayer(i) {
-      //   var srcImage = 'https://www.zagat.com/assets/img/z-logo-icon-red.svg';
-
-      //   for (var j = 0; j < this.props.markers.length; j++) {
-      //     console.log('markers', this.props.markers[j]);
-      //     if (j !== i) {
-      //       console.log(google.maps)
-      //       this.props.markers[j].setIcon(
-      //           this.props.markers[j],
-      //         {
-      //           url: srcImage,
-      //           scaledSize: new google.maps.Size(20, 20)
-      //         }
-      //       )
-  
-      //     }
-      //   }
-      // }
-      // this.toggleLayer = this.toggleLayer.bind(this)
-
-
-
+      var newtargetTrue = this.state.targetTrue;
+      newState.push({ key: i.toString(), map: map, data: data, index: i, current: false })
     }
     this.setState({
-      item: newState
+      item: newState,
     })
   }
 
+
+  toggleLayer(i) {
+    var newState = this.state.item
+    newState.forEach(j=> {j.current=false});
+    newState[i].current = true
+    this.setState({
+      currentItem: i,
+      item: newState
+    }, ()=>{
+      console.log(this.state.item)
+    }
+    )
+  }
 
 
   loadMap() {
@@ -297,8 +292,8 @@ class Map extends React.Component {
   render() {
     return (
       <div id="refmap" ref='map'>
-        {this.state.item.map( i=>
-          <Marker key={i.key} map={i.map} data={i.data} i={i.index} current={i.current}/>
+        {this.state.item.map(i =>
+          <Marker key={i.key} map={i.map} data={i.data} i={i.index} current={i.current} toggleLayer = {this.toggleLayer} />
         )}
       </div>
     )
