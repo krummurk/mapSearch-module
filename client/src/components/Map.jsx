@@ -41,7 +41,7 @@ class Map extends React.Component {
       const maps = google.maps;
       const mapRef = this.refs.map;
       const node = ReactDOM.findDOMNode(mapRef);
-      let zoom = 13;
+      let zoom = 14;
       let lat = 37.774929;
       let lng = -122.419416;
       console.log(this.state.data[0].latitude, this.state.data[0].longitude);
