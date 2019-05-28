@@ -35,28 +35,22 @@ class Map extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      map: [example],
-      item: [],
-      targetTrue: [],
-      currentItem: 0
+      map: undefined,
+      data: [example],
     }
 
     this.searchByCity = this.searchByCity.bind(this);
-    this.renderPoints = this.renderPoints.bind(this);
     this.loadMap = this.loadMap.bind(this);
-    this.toggleLayer = this.toggleLayer.bind(this)
 
   }
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.google !== this.props.google) {
       this.loadMap();
     }
-    console.log('what?')
   }
 
   componentDidMount() {
     this.loadMap();
-    console.log('city', this.props.city)
     this.searchByCity(this.props.city);
   }
 
@@ -69,9 +63,9 @@ class Map extends React.Component {
         console.log(data);
         data = JSON.parse(data);
         this.setState({
-          map: data
+          data: data,
+          map: this.map
         }, () => {
-          this.renderPoints(data, this.map);
         })
       },
       error: (err) => {
@@ -81,31 +75,8 @@ class Map extends React.Component {
   }
 
 
-  renderPoints(data, map) {
-    var srcImage = 'https://www.zagat.com/assets/img/z-logo-icon-red.svg';
-    for (var i = 0; i < data.length; i++) {
-      var newState = this.state.item;
-      var newtargetTrue = this.state.targetTrue;
-      newState.push({ key: i.toString(), map: map, data: data, index: i, current: false })
-    }
-    this.setState({
-      item: newState,
-    })
-  }
 
 
-  toggleLayer(i) {
-    var newState = this.state.item
-    newState.forEach(j=> {j.current=false});
-    newState[i].current = true
-    this.setState({
-      currentItem: i,
-      item: newState
-    }, ()=>{
-      console.log(this.state.item)
-    }
-    )
-  }
 
 
   loadMap() {
@@ -290,13 +261,17 @@ class Map extends React.Component {
   }
 
   render() {
-    return (
-      <div id="refmap" ref='map'>
-        {this.state.item.map(i =>
-          <Marker key={i.key} map={i.map} data={i.data} i={i.index} current={i.current} toggleLayer = {this.toggleLayer} />
-        )}
-      </div>
-    )
+    if (this.state.map !== undefined) {
+      console.log(this.state.data,this.state.map )
+      return (
+        <div id="refmap" ref='map'>
+          <Marker data={this.state.data} map={this.state.map} />
+        </div>
+      )
+    } else {
+      return <div id="refmap" ref='map'/>
+    }
+
   }
 }
 
