@@ -13,10 +13,10 @@ class Map extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: [example],
+      data: this.props.data,
     }
-
-    this.searchByCity = this.searchByCity.bind(this);
+    console.log('this.state.data', this.state.data)
+    // this.searchByCity = this.searchByCity.bind(this);
     this.loadMap = this.loadMap.bind(this);
 
   }
@@ -28,27 +28,9 @@ class Map extends React.Component {
 
   componentDidMount() {
     this.loadMap();
-    this.searchByCity(this.props.city);
+    // this.searchByCity(this.props.city);
   }
 
-  searchByCity(city) {
-    console.log('searchByCity', city)
-    $.ajax({
-      method: 'GET',
-      url: '/API/map/' + city,
-      success: (data) => {
-        console.log(data);
-        data = JSON.parse(data);
-        this.setState({
-          data: data,
-        }, () => {
-        })
-      },
-      error: (err) => {
-        console.log(err);
-      }
-    })
-  }
 
 
 
@@ -232,7 +214,7 @@ class Map extends React.Component {
           ]
       })
       this.map = new maps.Map(node, mapConfig);
-      // this.forceUpdate() // do not need this.
+      this.forceUpdate() // do not need this.
     }
   }
 

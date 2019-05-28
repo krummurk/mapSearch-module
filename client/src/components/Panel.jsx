@@ -5,13 +5,13 @@ import $ from 'jquery';
 import { parseExpression } from '@babel/parser';
 
 class Panel extends React.Component {
-    constructor() {
-      super();
+    constructor(props) {
+      super(props);
     }
     render() {
       return (
         <div>
-          Hiiiiiiii what? 
+          
         </div>
       )
     }

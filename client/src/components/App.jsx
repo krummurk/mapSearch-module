@@ -36,7 +36,36 @@ const Flexcolumn = styled.div`
 class App extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      data: []
+    }
+    this.searchByCity = this.searchByCity.bind(this);
   }
+
+  componentDidMount() {
+    this.loadMap();
+    this.searchByCity(this.props.match.params.name);
+  }
+
+  searchByCity(city) {
+    console.log('searchByCity', city)
+    $.ajax({
+      method: 'GET',
+      url: '/API/map/' + city,
+      success: (data) => {
+        console.log(data);
+        data = JSON.parse(data);
+        this.setState({
+          data: data,
+        }, () => {
+        })
+      },
+      error: (err) => {
+        console.log(err);
+      }
+    })
+  }
+
   render() {
     return (
         <StyleContainer>
@@ -48,17 +77,40 @@ class App extends React.Component {
 
 class Container extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
+    this.state = {
+      data: []
+    }
+    this.searchByCity = this.searchByCity.bind(this);
   }
+  componentDidMount() {
+    this.searchByCity(this.props.match.params.name);
+  }
+
+  searchByCity(city) {
+    $.ajax({
+      method: 'GET',
+      url: '/API/map/' + city,
+      success: (data) => {
+        data = JSON.parse(data);
+        this.setState({
+          data: data,
+        })
+      },
+      error: (err) => {
+        console.log(err);
+      }
+    })
+  }
+
   render() {
-    if (!this.props.loaded) {
+    if (!this.props.loaded || this.state.data.length===0) {
       return <div>Loading...</div>
     } else {
-      // console.log('this page is loaded')
       return (
         <StyleContainer>
-          <Wrapper><Panel/></Wrapper>
-          <Wrapper><Map google={this.props.google} city={this.props.match.params.name} /></Wrapper>
+          <Wrapper><Panel data={this.state.data} /></Wrapper>
+          <Wrapper><Map google={this.props.google} city={this.props.match.params.name} data={this.state.data} /></Wrapper>
         </StyleContainer>
       )
     }
