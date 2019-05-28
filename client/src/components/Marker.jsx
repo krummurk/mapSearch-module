@@ -34,7 +34,7 @@ class Marker extends React.Component {
             });
 
             google.maps.event.addListener(marker, 'click', e => { 
-                map.setCenter(marker.getPosition());
+                map.panTo(marker.getPosition());
                 cb(idx) 
             });
             google.maps.event.addListener(marker, 'mouseover', e => {
@@ -58,7 +58,9 @@ class Marker extends React.Component {
         this.setState({
             current: idx
         }, () => {
-            console.log(this.state.current)
+            // console.log(idx);
+            this.props.updateCurrentIndex(idx)
+            // console.log(this.state.current)
         })
 
     }

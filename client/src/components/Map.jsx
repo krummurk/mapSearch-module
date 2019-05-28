@@ -15,7 +15,6 @@ class Map extends React.Component {
     this.state = {
       data: this.props.data,
     }
-    console.log('this.state.data', this.state.data)
     // this.searchByCity = this.searchByCity.bind(this);
     this.loadMap = this.loadMap.bind(this);
 
@@ -30,7 +29,6 @@ class Map extends React.Component {
     this.loadMap();
     // this.searchByCity(this.props.city);
   }
-
 
 
 
@@ -222,7 +220,7 @@ class Map extends React.Component {
     if (this.map !== undefined) {
       return (
         <div id="refmap" ref='map'>
-          <Marker data={this.state.data} map={this.map} />
+          <Marker data={this.state.data} map={this.map} updateCurrentIndex = {this.props.updateCurrentIndex}/>
         </div>
       )
     } else {

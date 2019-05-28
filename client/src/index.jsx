@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {App, TemplateGoogle} from './components/App.jsx'
+import {TemplateGoogle} from './components/App.jsx'
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 ReactDOM.render(<BrowserRouter>
