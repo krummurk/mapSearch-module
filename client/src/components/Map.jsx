@@ -12,9 +12,8 @@ import Marker from './Marker.jsx'
 class Map extends React.Component {
   constructor(props) {
     super(props);
-
     this.loadMap = this.loadMap.bind(this);
-
+    console.log(this.props);
   }
   // componentDidUpdate(prevProps, prevState) {
   //   if (prevProps.google !== this.props.google) {
@@ -22,7 +21,6 @@ class Map extends React.Component {
   //   }
   // }
   componentWillUpdate(){
-    // console.log('this is updating')
     // this.loadMap();
   }
 
@@ -38,8 +36,6 @@ class Map extends React.Component {
       const mapRef = this.refs.map;
       const node = ReactDOM.findDOMNode(mapRef);
       let zoom = 14;
-      let lat = 37.774929;
-      let lng = -122.419416;
       const center = new maps.LatLng(this.props.data[0].latitude, this.props.data[0].longitude);
       const mapConfig = Object.assign({}, {
         center: center,
@@ -208,6 +204,7 @@ class Map extends React.Component {
           ]
       })
       this.map = new maps.Map(node, mapConfig);
+      console.log(this.map, this.props.inheritMap)
       // this.forceUpdate() // do not need this.
     }
   }

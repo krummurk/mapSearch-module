@@ -12,7 +12,6 @@ export const wrapper = (options) => (WrappedComponent) => {
   class Wrapper extends React.Component {
     constructor(props, context) {
       super(props, context);
-
       this.state = {
         loaded: false,
         map: null,
