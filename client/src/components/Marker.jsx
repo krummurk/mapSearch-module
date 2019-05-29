@@ -9,7 +9,6 @@ class Marker extends React.Component {
             current: -1,
             markerArr: []
         }
-        console.log('props', this.props)
         this.onClick = this.onClick.bind(this)
     }
     componentDidMount(){
@@ -58,26 +57,23 @@ class Marker extends React.Component {
         this.setState({
             current: idx
         }, () => {
-            // console.log(idx);
             this.props.updateCurrentIndex(idx)
-            // console.log(this.state.current)
         })
 
     }
 
     render() {
         const srcImage = 'https://www.zagat.com/assets/img/z-logo-icon-red.svg';
-        console.log(this.state.markerArr)
-
-        if (this.state.current > 0) {
+        var currentIndex=this.props.currentIndex;
+        if (currentIndex > 0) {
             for (let k = 0; k < this.state.markerArr.length; k++) {
                 this.state.markerArr[k].setIcon(
                     {
                         url: srcImage,
                         scaledSize: new google.maps.Size(20, 20)
-                    });
+                    });       
             }
-            this.state.markerArr[this.state.current].setIcon(
+            this.state.markerArr[currentIndex].setIcon(
                 {
                     url: srcImage,
                     scaledSize: new google.maps.Size(50, 50)
@@ -85,7 +81,6 @@ class Marker extends React.Component {
         }
         return (
             <div>
-                {/* {items} */}
             </div>
         )
 

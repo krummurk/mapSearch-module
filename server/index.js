@@ -17,15 +17,10 @@ app.get('/map/:name', function(req, res) {
     res.header("X-Content-Type", "text/javascript");
     res.sendFile(path.join(__dirname, '/../client/dist/index.html'))
 });
-// app.get('/res/:name', function(req, res) {
-//     res.header("X-Content-Type", "text/javascript");
-//     res.sendFile(path.join(__dirname, '/../client/dist/index.html'))
-// });
+
 
 app.get('/API/map/:n', function(req, res) {
-    // var c = req.params.c
     var n = req.params.n
-    console.log('n')
     db.allres(n, (err, data) => {
         res.header("Access-Control-Allow-Origin", "*");
         if (err) {

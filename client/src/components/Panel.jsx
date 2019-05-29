@@ -22,9 +22,9 @@ class Panel extends React.Component {
     render() {
       var items = this.props.data.map( (i,idx)=> {
         if (this.props.currentIndex === idx) {
-          return <Entry entry = {i} name= {idx.toString()} key = {idx.toString()} currentIndex={true} />
+          return <Entry entry = {i} name= {idx.toString()} key = {idx.toString()} currentIndex={true} num={idx} update={this.props.updateCurrentIndex} />
         } else {
-          return <Entry entry = {i} name= {idx.toString()} key = {idx.toString()} currentIndex={false} />
+          return <Entry entry = {i} name= {idx.toString()} key = {idx.toString()} currentIndex={false} num={idx}  update={this.props.updateCurrentIndex}/>
         }
       })
       return (

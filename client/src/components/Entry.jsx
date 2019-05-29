@@ -102,6 +102,15 @@ class Entry extends React.Component {
       super(props);
       this.myRef = React.createRef()   // Create a ref object 
       this.scrollToMyRef = this.scrollToMyRef.bind(this)
+      this.selectRes = this.selectRes.bind(this)
+      console.log(this.props);
+    }
+    selectRes(e){
+        // console.log(this.props.updateCurrentIndex)
+        // console.log('index', this.props.entry.name);
+        // console.log('index', this.props.num);
+        // console.log('index', this.props.name);
+        this.props.update(this.props.num);
     }
     scrollToMyRef() {
         this.myRef.current.scrollIntoView({
@@ -113,18 +122,17 @@ class Entry extends React.Component {
 
     componentDidUpdate(){
         if (this.props.currentIndex){
-            console.log(this.props.currentIndex);
             this.scrollToMyRef();
         }
     }
  
     render(){
-        var  {name, description, neighborhood,cuisine, priceLevel, foodR, decorR, serivceR, foodUrl} = this.props.entry;
+        var  {name, description, neighborhood,cuisine, priceLevel, foodR, decorR, serviceR, foodUrl} = this.props.entry;
         var priceLevel = priceLevel? String(new Array(priceLevel).fill("$").join('')) : ""
         var dot = priceLevel? "·" : ""
         var randomSize = Math.floor(Math.random()*10);
         return (
-            <Wrapper ref={this.myRef} >
+            <Wrapper ref={this.myRef} onMouseOver = {this.selectRes} >
                 <Flexcolumn size={1}>
                 {/* <Content src={"https://picsum.photos/30" + Math.floor(Math.random()*10)}/> */}
                     <Content src={foodUrl[0]}/>
@@ -140,9 +148,8 @@ class Entry extends React.Component {
                     <ZagatImage src='https://www.zagat.com/assets/img/z-logo-icon-red.svg'/>
                     <BlackText> FOOD {foodR} </BlackText> <BlockItem> · </BlockItem> 
                     <BlackText> DECOR {decorR}  </BlackText> <BlockItem> · </BlockItem> 
-                    <BlackText> SERVICE{ serivceR  }  </BlackText> 
+                    <BlackText> SERVICE{serviceR} </BlackText> <BlockItem>  </BlockItem> 
                 </Block>
-
                 <Description>{description.split(' ').slice(0,50).join(' ')} </Description>
                 </Flexcolumn>
             </Wrapper>

@@ -12,10 +12,7 @@ import Marker from './Marker.jsx'
 class Map extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      data: this.props.data,
-    }
-    // this.searchByCity = this.searchByCity.bind(this);
+
     this.loadMap = this.loadMap.bind(this);
 
   }
@@ -24,15 +21,14 @@ class Map extends React.Component {
   //     this.loadMap();
   //   }
   // }
+  componentWillUpdate(){
+    // console.log('this is updating')
+    // this.loadMap();
+  }
 
   componentDidMount() {
     this.loadMap();
-    // this.searchByCity(this.props.city);
   }
-
-
-
-
 
 
   loadMap() {
@@ -44,8 +40,7 @@ class Map extends React.Component {
       let zoom = 14;
       let lat = 37.774929;
       let lng = -122.419416;
-      console.log(this.state.data[0].latitude, this.state.data[0].longitude);
-      const center = new maps.LatLng(this.state.data[0].latitude, this.state.data[0].longitude);
+      const center = new maps.LatLng(this.props.data[0].latitude, this.props.data[0].longitude);
       const mapConfig = Object.assign({}, {
         center: center,
         zoom: zoom,
@@ -213,7 +208,7 @@ class Map extends React.Component {
           ]
       })
       this.map = new maps.Map(node, mapConfig);
-      this.forceUpdate() // do not need this.
+      // this.forceUpdate() // do not need this.
     }
   }
 
@@ -221,7 +216,8 @@ class Map extends React.Component {
     if (this.map !== undefined) {
       return (
         <div id="refmap" ref='map'>
-          <Marker data={this.state.data} map={this.map} updateCurrentIndex = {this.props.updateCurrentIndex}/>
+          <Marker data={this.props.data} map={this.map} updateCurrentIndex = {this.props.updateCurrentIndex}
+          currentIndex={this.props.currentIndex}/>
         </div>
       )
     } else {

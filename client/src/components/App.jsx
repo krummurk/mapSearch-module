@@ -13,6 +13,62 @@ import faker from 'faker';
 import { createGlobalStyle } from "styled-components";
 
 
+
+
+const CustomInput = styled.input`
+font-size: 1em;
+text-align: left;
+border: 1px solid #EFEFEF;
+padding: 0.5em;
+width: 100%;
+border-radius: 10px;
+`;
+
+const SearchBarWrapper = styled.div`
+display: flex;
+align-items: stretch;
+justify-content: center;
+width: 280px;
+align-self: center;
+padding: 2rem;
+&:focus {outline:0};
+
+
+`
+
+const Button = styled.button`
+  align-self: center;
+  border: 1px solid #d8d9db;
+  font-family: 'Montserrat',sans-serif;
+  font-size: .875rem;
+  font-weight: 500;
+  line-height: 1;
+  border-radius: 1rem;
+  :hover {
+    border: 2px solid red;
+  }
+  &:focus {outline:0};
+  color: black;
+  // margin: 0 0.5em;
+  // padding: 0.25em 1em;
+  height: 35px;
+  width: 35px;
+`
+// onChange={props.onChange}
+// value={props.value}
+// animation: ${props.animation}
+
+const PrimaryColumn = styled.div`
+flex: 2
+`
+const SecondaryColumn = styled.div`
+flex: 1
+`
+
+
+
+
+
 const GlobalStyles = createGlobalStyle`
   body {
     @import url('@import url('https://fonts.googleapis.com/css?family=Lato&display=swap');
@@ -36,7 +92,6 @@ const ZagatLogoBoxDiv = styled.div`
     background-color: #b70038;
     fill:white
   }
-
 `
 const List = styled.section`
   padding: 0.75rem;
@@ -97,6 +152,7 @@ class Container extends React.Component {
   }
   componentDidMount() {
     this.searchByCity(this.props.match.params.name);
+    // this.searchByCity(this.props.match.params.name);
   }
 
   updateCurrentIndex(i) {
@@ -107,6 +163,7 @@ class Container extends React.Component {
   getStr(e) {
     this.setState(
       { searchStr: e.target.value }
+    
     )
   }
   searchByCity(city) {
@@ -131,11 +188,10 @@ class Container extends React.Component {
     } else {
       return (
         <StyleContainer>
-          <GlobalStyles/>
+          <GlobalStyles />
           <TopBar>
-            <Flexcolumn>
-              <ZagatLogoBoxDiv>
-            <svg xmlns="http://www.w3.org/2000/svg"  width="250" height="100" viewBox="0 0 145 33">
+            <ZagatLogoBoxDiv>
+              <svg xmlns="http://www.w3.org/2000/svg" width="250" height="100" viewBox="0 0 145 33">
                 <ZagatLogoPaths>
                   <ZagatLogoPaths>
                     <path d="M36.7 27.4L34.4 32.1 36.7 32.1 38.1 29.3 49.4 29.3 50.7 32.1 53.1 32.1 50.8 27.4 36.7 27.4"></path>
@@ -154,14 +210,26 @@ class Container extends React.Component {
                   </ZagatLogoPaths>
                 </ZagatLogoPaths>
               </svg>
-              </ZagatLogoBoxDiv>
-          </Flexcolumn>
+            </ZagatLogoBoxDiv>
+              <SearchBarWrapper>
+                <PrimaryColumn>
+                  <CustomInput
+                    type="text"
+                    placeholder="City"
+                    onChange = {this.getStr}
+                  />
+                </PrimaryColumn>
+                <SecondaryColumn>
+                  <Button onClick={e=>{this.searchByCity(this.state.searchStr)}}/>
+                </SecondaryColumn>
+              </SearchBarWrapper>
           </TopBar>
-        <Flexrow>
-          <List><Panel data={this.state.data} currentIndex={this.state.currentIndex} /></List>
-          <MapStyle><Map google={this.props.google} city={this.props.match.params.name} data={this.state.data}
-            updateCurrentIndex={this.updateCurrentIndex} /></MapStyle>
-        </Flexrow>
+          <Flexrow>
+            <List><Panel data={this.state.data} currentIndex={this.state.currentIndex} 
+            updateCurrentIndex={this.updateCurrentIndex}  /></List>
+            <MapStyle><Map google={this.props.google} city={this.props.match.params.name} data={this.state.data}
+              updateCurrentIndex={this.updateCurrentIndex} currentIndex={this.state.currentIndex} /></MapStyle>
+          </Flexrow>
         </StyleContainer >
       )
     }
