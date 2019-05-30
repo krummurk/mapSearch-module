@@ -6,7 +6,6 @@ class Marker extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            current: -1,
             markerArr: []
         }
         this.onClick = this.onClick.bind(this)
@@ -53,11 +52,8 @@ class Marker extends React.Component {
         var items = this.props.data.map(
             (i, idx) => { makeMarker(i, idx, this.onClick) }
         );
-        this.makeArr = markerArr
         this.props.map.panTo(markerArr[0].getPosition());
-        return {
-            
-        }
+        return ;
 
     }
     componentDidMount() {
@@ -102,14 +98,10 @@ class Marker extends React.Component {
         })
 
     }
-    onClick(idx) {
-        console.log('clicking')
-        this.setState({
-            current: idx
-        }, () => {
-            this.props.updateCurrentIndex(idx)
-        })
 
+
+    onClick(idx) {
+        this.props.updateCurrentIndex(idx)
     }
 
     render() {
