@@ -6,11 +6,9 @@ class Marker extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            oldmarkerArr: [],
-            markerArr: []
+            markerArr: [],
+            infowindowArr: []
         }
-        this.onClick = this.onClick.bind(this)
-        console.log('the data is', this.props.data)
     }
 
     static getDerivedStateFromProps(props, state) {
@@ -18,12 +16,13 @@ class Marker extends React.Component {
 
             return {
                 makerArr: state.markerArr,
-                oldmarkerArr: state.markerArr
+                infowindowArr: state.infowindowArr
             };
         }
         const srcImage = 'https://www.zagat.com/assets/img/z-logo-icon-red.svg';
         var map = props.map
         var markerArr = [];
+        var infowindowArr = [];
         var makeMarker = function (i, idx, cb) {
             var marker = new google.maps.Marker({
                 position: new google.maps.LatLng(i.latitude, i.longitude),
@@ -47,11 +46,13 @@ class Marker extends React.Component {
             google.maps.event.addListener(marker, 'mouseover', e => {
                 infowindow.open(map);
             })
+            https://stackoverflow.com/questions/50566196/infowindow-close-not-working-on-google-maps-using-reactjs
             google.maps.event.addListener(marker, 'mouseout', e => {
-                infowindow.close(map);
+                infowindow.close();
             })
 
             markerArr.push(marker);
+            infowindowArr.push(infowindow);
         }
         var items = props.data.map(
             (i, idx) => { makeMarker(i, idx, props.updateCurrentIndex) }
@@ -63,16 +64,16 @@ class Marker extends React.Component {
             i.setMap(null);
         })
         
+        state.infowindowArr.forEach(i => {
+            i.close();
+        })
         state.markerArr.length = 0;
         return {
             markerArr: markerArr,
-            oldmarkerArr: state.oldmarkerArr
+            infowindowArr: infowindowArr
         };
     }
 
-    onClick(idx) {
-        this.props.updateCurrentIndex(idx)
-    }
 
     render() {
         const srcImage = 'https://www.zagat.com/assets/img/z-logo-icon-red.svg';

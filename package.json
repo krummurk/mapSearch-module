@@ -29,6 +29,7 @@
         "react-test-renderer": "^16.8.6",
         "request": "^2.88.0",
         "styled-components": "^4.2.0",
+        "underscore": "^1.9.1",
         "yarn": "^1.16.0"
     },
     "devDependencies": {

@@ -9,9 +9,8 @@ import GoogleMap_API from '../../../config_GoogleMapAPI.js';
 import Map from './Map.jsx';
 import Panel from './Panel.jsx';
 import { createGlobalStyle } from "styled-components";
-
-
-
+import _ from 'underscore';
+// import _ from 'lodash'
 const CustomInput = styled.input`
 font-size: 1em;
 text-align: left;
@@ -51,9 +50,6 @@ const Button = styled.button`
   height: 35px;
   width: 35px;
 `
-// onChange={props.onChange}
-// value={props.value}
-// animation: ${props.animation}
 
 const PrimaryColumn = styled.div`
 flex: 2
@@ -146,6 +142,7 @@ class Container extends React.Component {
     this.searchByCity = this.searchByCity.bind(this);
     this.updateCurrentIndex = this.updateCurrentIndex.bind(this);
     this.getStr = this.getStr.bind(this);
+    // this.getStr = _.debounce(this.getStr, 1000);
   }
   componentDidMount() {
     this.searchByCity(this.props.match.params.name);
@@ -157,11 +154,13 @@ class Container extends React.Component {
     })
   }
   getStr(e) {
+    console.log(e.target.value);
     this.setState(
       { searchStr: e.target.value }
 
     )
   }
+  // https://stackoverflow.com/questions/23123138/perform-debounce-in-react-js
   searchByCity(city) {
     $.ajax({
       method: 'GET',

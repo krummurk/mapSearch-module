@@ -2,33 +2,6 @@ const faker = require('faker');
 const fs = require('fs');
 var a = require('./res44Tehama15.js');
 
-// var column = ['apiKey',
-//     'logoUrl',
-//     'name',
-//     'streetAddress',
-//     'city',
-//     'state',
-//     'zip',
-//     'foodTypes',
-//     'phone',
-//     'latitude',
-//     'longitude',
-//     'minFreeDelivery',
-//     'taxRate',
-//     'acceptsCash',
-//     'acceptsCard',
-//     'offersPickup',
-//     'offersDelivery',
-//     'isTestRestaurant',
-//     'minWaitTime',
-//     'maxWaitTime',
-//     'open',
-//     'url',
-//     'hours',
-//     'timezone'
-// ]
-
-
 var topTags = ['Good For A Date', 'Special Occasion', 'Authentic', 'Most Festive', 'Most Romantic', 'Great For Brunch',
     'Casual', 'Neighborhood Gem', 'Great for Infant', 'Great for Group', 'Fit For Foodies', 'Hole in the Wall',
     'Tasting Menu', 'Quiet Conversation'

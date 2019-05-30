@@ -95,29 +95,77 @@ for (let i = 0; i < resMenuData.length; i++) {
                 itemDes = itemDes.substring(itemDes.indexOf(".") + 1);
                 itemDes = itemDes.replace("[^a-zA-Z]", "");
                 resMenuData[i][j].items[k]["name"] = itemDes;
-                // if (i===0 && j===0) {
-                //     console.log(resMenuData[i][j].items[k]["name"].replace("[^a-zA-Z]", ""))
-                //  } 
                 if (Math.random() > 0.88) {
                     resMenuData[i][j].items[k]['modifiers'] = modifierSeed();
-                    // console.log(i, j, k)
                 }
             }
         }
     }
 }
-
+const imagePaths = [
+    'https://s3-us-west-1.amazonaws.com/asyncphotos/1.jpg',
+    'https://s3-us-west-1.amazonaws.com/asyncphotos/2.jpg',
+    'https://s3-us-west-1.amazonaws.com/asyncphotos/3.jpg',
+    'https://s3-us-west-1.amazonaws.com/asyncphotos/4.jpg',
+    'https://s3-us-west-1.amazonaws.com/asyncphotos/5.jpg',
+    'https://s3-us-west-1.amazonaws.com/asyncphotos/6.jpg',
+    'https://s3-us-west-1.amazonaws.com/asyncphotos/7.jpg',
+    'https://s3-us-west-1.amazonaws.com/asyncphotos/8.jpg',
+    'https://s3-us-west-1.amazonaws.com/asyncphotos/9.jpg',
+    'https://s3-us-west-1.amazonaws.com/asyncphotos/10.jpg',
+    'https://s3-us-west-1.amazonaws.com/asyncphotos/11.jpg',
+    'https://s3-us-west-1.amazonaws.com/asyncphotos/12.jpg',
+    'https://s3-us-west-1.amazonaws.com/asyncphotos/13.jpg',
+    'https://s3-us-west-1.amazonaws.com/asyncphotos/14.jpg',
+    'https://s3-us-west-1.amazonaws.com/asyncphotos/15.jpg',
+    'https://s3-us-west-1.amazonaws.com/asyncphotos/16.jpg',
+    'https://s3-us-west-1.amazonaws.com/asyncphotos/17.jpg',
+    'https://s3-us-west-1.amazonaws.com/asyncphotos/18.jpg',
+    'https://s3-us-west-1.amazonaws.com/asyncphotos/19.jpg',
+    'https://s3-us-west-1.amazonaws.com/asyncphotos/20.jpg',
+    'https://s3-us-west-1.amazonaws.com/asyncphotos/21.jpg',
+    'https://s3-us-west-1.amazonaws.com/asyncphotos/22.jpg',
+    'https://s3-us-west-1.amazonaws.com/asyncphotos/23.jpg',
+    'https://s3-us-west-1.amazonaws.com/asyncphotos/24.jpg',
+    'https://s3-us-west-1.amazonaws.com/asyncphotos/25.jpg',
+    'https://s3-us-west-1.amazonaws.com/asyncphotos/26.jpg',
+    'https://s3-us-west-1.amazonaws.com/asyncphotos/27.jpg',
+    'https://s3-us-west-1.amazonaws.com/asyncphotos/28.jpg',
+    'https://s3-us-west-1.amazonaws.com/asyncphotos/29.jpg',
+    'https://s3-us-west-1.amazonaws.com/asyncphotos/30.jpg',
+    'https://s3-us-west-1.amazonaws.com/asyncphotos/31.jpg',
+    'https://s3-us-west-1.amazonaws.com/asyncphotos/32.jpg',
+    'https://s3-us-west-1.amazonaws.com/asyncphotos/33.jpg',
+    'https://s3-us-west-1.amazonaws.com/asyncphotos/34.jpg',
+    'https://s3-us-west-1.amazonaws.com/asyncphotos/35.jpg',
+    'https://s3-us-west-1.amazonaws.com/asyncphotos/36.jpg',
+    'https://s3-us-west-1.amazonaws.com/asyncphotos/37.jpg',
+    'https://s3-us-west-1.amazonaws.com/asyncphotos/38.jpg',
+    'https://s3-us-west-1.amazonaws.com/asyncphotos/39.jpg',
+    'https://s3-us-west-1.amazonaws.com/asyncphotos/40.jpg',
+    'https://s3-us-west-1.amazonaws.com/asyncphotos/41.jpg',
+    'https://s3-us-west-1.amazonaws.com/asyncphotos/42.jpg',
+    'https://s3-us-west-1.amazonaws.com/asyncphotos/43.jpg',
+    'https://s3-us-west-1.amazonaws.com/asyncphotos/44.jpg',
+    'https://s3-us-west-1.amazonaws.com/asyncphotos/45.jpg',
+    'https://s3-us-west-1.amazonaws.com/asyncphotos/46.jpg',
+    'https://s3-us-west-1.amazonaws.com/asyncphotos/47.jpg',
+    'https://s3-us-west-1.amazonaws.com/asyncphotos/48.jpg',
+    'https://s3-us-west-1.amazonaws.com/asyncphotos/49.jpg',
+    'https://s3-us-west-1.amazonaws.com/asyncphotos/50.jpg'
+  ];
 resDesData = resDesData.map((i, idx) => {
     i.resIndex = ((idx).toString().length < 3) ? new Array(3 - idx.toString().length).fill(0).join('') + idx.toString() :
         (idx).toString();
     i.menus = menuSeed();
     var foodPics = new Array(Math.floor(Math.random() * 10) + 1).fill(0);
-    foodPics = foodPics.map(i => {
-        var randomSize = Math.floor(Math.random() * 100);
-        var Size = 300 + randomSize;
-        return "http://lorempixel.com/" + Size + '/' + Size + "/food?"
-    });
-    i.foodUrl = foodPics;
+    // foodPics = foodPics.map(i => {
+    //     var randomSize = Math.floor(Math.random() * 100);
+    //     var Size = 300 + randomSize;
+    //     return "http://lorempixel.com/" + Size + '/' + Size + "/food?"
+    // });
+    var imagePathsL = imagePaths.length
+    i.foodUrl = foodPics.map(i=> imagePaths[Math.floor(Math.random()* imagePathsL)]);
     if (i.neighborhood === 'South of Market') {
         i.neighborhood = 'SoMa';
     }
@@ -178,46 +226,3 @@ Restaurant.collection.insert(resDesData, onInsert);
 
 
 
-
-
-// function onInsert(err, docs) {
-//     if (err) {
-//         throw err;
-//     } else {
-//         console.info('%d restaurants were successfully stored.', docs.length);
-//     }
-// }
-
-
-
-// var likesSchema = mongoose.Schema({
-//     username: 'string'
-// })
-// var statusSchema = mongoose.Schema({
-//     text: 'string',
-//     likes: [likesSchema]
-// })
-// var userSchema = mongoose.Schema({
-//     username: 'string',
-//     status: [statusSchema]
-// })
-
-
-// var User = mongoose.model('User', userSchema);
-// var user = new User({
-//     username: 'derp',
-//     status: [
-//         { text: 'Hello world!' },
-//         { text: 'Bye!' },
-//     ]
-// })
-
-// var friend = new User({
-//     username: 'goku',
-//     status: [
-//         { text: 'Kamehameha!!!' },
-//         { text: 'Mahalo!!!' }
-//     ]
-// })
-// user.save(onInsert);
-// friend.save(onInsert);
