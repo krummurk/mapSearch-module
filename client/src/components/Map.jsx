@@ -12,17 +12,15 @@ import Marker from './Marker.jsx'
 class Map extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      data: this.props.data
+    }
+    console.log('current data is ', this.props.data);
     this.loadMap = this.loadMap.bind(this);
-    console.log(this.props);
+
   }
-  // componentDidUpdate(prevProps, prevState) {
-  //   if (prevProps.google !== this.props.google) {
-  //     this.loadMap();
-  //   }
-  // }
-  componentWillUpdate(){
-    // this.loadMap();
-  }
+
+
 
   componentDidMount() {
     this.loadMap();
@@ -203,9 +201,16 @@ class Map extends React.Component {
             }
           ]
       })
+      console.log('Hello')
       this.map = new maps.Map(node, mapConfig);
+      this.setState({
+          mapCanvas: this.map
+        }, () => {
+          console.log('mapcanvas after set state', this.state.mapCanvas)
+        }
+      );
       console.log(this.map, this.props.inheritMap)
-      // this.forceUpdate() // do not need this.
+      this.forceUpdate() // do not need this.
     }
   }
 
@@ -213,12 +218,12 @@ class Map extends React.Component {
     if (this.map !== undefined) {
       return (
         <div id="refmap" ref='map'>
-          <Marker data={this.props.data} map={this.map} updateCurrentIndex = {this.props.updateCurrentIndex}
-          currentIndex={this.props.currentIndex}/>
+          <Marker data={this.props.data} map={this.state.mapCanvas} updateCurrentIndex={this.props.updateCurrentIndex}
+            currentIndex={this.props.currentIndex} />
         </div>
       )
     } else {
-      return <div id="refmap" ref='map'/>
+      return <div id="refmap" ref='map' />
     }
 
   }

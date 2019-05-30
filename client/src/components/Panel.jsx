@@ -20,6 +20,8 @@ class Panel extends React.Component {
       super(props);
     }
     render() {
+      console.log('in this panel component, data is' , this.props.data)
+
       var items = this.props.data.map( (i,idx)=> {
         if (this.props.currentIndex === idx) {
           return <Entry entry = {i} name= {idx.toString()} key = {idx.toString()} currentIndex={true} num={idx} update={this.props.updateCurrentIndex} />
