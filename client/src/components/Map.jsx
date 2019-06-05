@@ -1,11 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom'
-import GoogleApi from '../../dist/lib/GoogleApi.js';
-import GoogleApiComponent from '../../dist/lib/GoogleApiComponent.jsx';
-import ScriptCache from '../../dist/lib/ScriptCache.jsx';
-import GoogleMap_API from '../../../config_GoogleMapAPI.js';
-import example from './exampleData.js';
-import $ from 'jquery';
 import Marker from './Marker.jsx'
 
 
@@ -210,7 +204,7 @@ class Map extends React.Component {
         }
       );
       console.log(this.map, this.props.inheritMap)
-      this.forceUpdate() // do not need this.
+      // this.forceUpdate() // do not need this.
     }
   }
 

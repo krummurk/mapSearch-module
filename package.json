@@ -9,7 +9,8 @@
     },
     "scripts": {
         "react-dev": "webpack -d --watch",
-        "test": "jest"
+        "test": "jest",
+        "start": "nodemon server/index.js"
     },
     "dependencies": {
         "babel-core": "^6.26.3",
@@ -19,6 +20,7 @@
         "faker": "^4.1.0",
         "fs": "0.0.1-security",
         "jquery": "^3.4.1",
+        "lodash": "^4.17.11",
         "mongoose": "^5.5.9",
         "node": "^12.2.0",
         "nodemon": "^1.19.0",

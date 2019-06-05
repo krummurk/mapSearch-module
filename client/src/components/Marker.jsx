@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 
 
 class Marker extends React.Component {
@@ -10,7 +9,6 @@ class Marker extends React.Component {
             infowindowArr: []
         }
     }
-
     static getDerivedStateFromProps(props, state) {
         if (props.data.length === 0) {
 

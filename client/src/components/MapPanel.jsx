@@ -1,16 +1,11 @@
 import React from 'react';
-import ReactDOM from 'react-dom'
 import styled from 'styled-components';
 import $ from 'jquery';
-import GoogleApi from '../../dist/lib/GoogleApi.js';
-import GoogleApiComponent from '../../dist/lib/GoogleApiComponent.jsx';
-import ScriptCache from '../../dist/lib/ScriptCache.jsx';
-import GoogleMap_API from '../../../config_GoogleMapAPI.js';
 import Map from './Map.jsx';
 import Panel from './Panel.jsx';
 import { createGlobalStyle } from "styled-components";
-import _ from 'underscore';
-// import _ from 'lodash'
+
+
 const CustomInput = styled.input`
 font-size: 1em;
 text-align: left;
@@ -142,22 +137,26 @@ class Container extends React.Component {
     this.searchByCity = this.searchByCity.bind(this);
     this.updateCurrentIndex = this.updateCurrentIndex.bind(this);
     this.getStr = this.getStr.bind(this);
-    // this.getStr = _.debounce(this.getStr, 1000);
+    this.searchClick = this.searchClick.bind(this);
+    // this.getStr = debounce(this.getStr, 1000);
   }
   componentDidMount() {
     this.searchByCity(this.props.match.params.name);
   }
 
+  searchClick(e){
+    this.searchByCity(this.state.searchStr);
+  }
   updateCurrentIndex(i) {
     this.setState({
       currentIndex: i
     })
   }
   getStr(e) {
-    console.log(e.target.value);
+    // e.persist();
+    // console.log(e.target.value);
     this.setState(
       { searchStr: e.target.value }
-
     )
   }
   // https://stackoverflow.com/questions/23123138/perform-debounce-in-react-js
@@ -215,7 +214,7 @@ class Container extends React.Component {
                 />
               </PrimaryColumn>
               <SecondaryColumn>
-                <Button onClick={e => { this.searchByCity(this.state.searchStr) }} />
+                <Button onClick={this.searchClick}/>
               </SecondaryColumn>
             </SearchBarWrapper>
           </TopBar>
