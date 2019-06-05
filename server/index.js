@@ -22,6 +22,7 @@ app.get('/map/:name', function(req, res) {
 app.get('/API/map/:n', function(req, res) {
     var n = req.params.n
     db.allres(n, (err, data) => {
+        console.log(err,data)
         res.header("Access-Control-Allow-Origin", "*");
         if (err) {
             res.sendStatus(505);

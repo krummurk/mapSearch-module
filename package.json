@@ -8,7 +8,7 @@
         "node": ">=6.13.0"
     },
     "scripts": {
-        "react-dev": "webpack -p",
+        "react-dev": "webpack -d --watch",
         "test": "jest",
         "start": "nodemon server/index.js"
     },

@@ -1,5 +1,4 @@
 const mongoose = require('mongoose'); // mongod --config /usr/local/etc/mongod.conf
-const Promise = require('bluebird')
 mongoose.connect('mongodb://localhost/fetcher2');
 var MenuSchema = mongoose.Schema({
     name: String,
@@ -60,11 +59,11 @@ var RestaurantSchema = mongoose.Schema({
     menus: [MenuSchema]
 });
 var Restaurant = mongoose.model('Restaurant', RestaurantSchema);
-
+RestaurantSchema.index({ neighborhood: 1, cuisine: 1, address: 1, name: 1, topTags:1, menus: 1 })
 
 // mongoose need the schema to work properly 
 // https://stackoverflow.com/questions/21429630/querying-a-collection-without-passing-schema-in-mongoose
-var res = function(q, cb) {
+var res = function (q, cb) {
     console.log('q=', q);
     Restaurant.find({ name: q }, (err, data) => {
         if (err) {
@@ -74,14 +73,26 @@ var res = function(q, cb) {
         }
     });
 }
-var allres = function(n, cb) {
-    Restaurant.find({'neighborhood': n}, (err, data) => {
+var allres = function (n, cb) {
+    // Restaurant.find({'neighborhood': n}, (err, data) => {
+    //     if (err) {
+    //         cb(err, null)
+    //     } else {
+    //         cb(null, data);
+    //     }
+    // });
+    Restaurant.find({ $text : { $search : n } }, (err, data) => {
+        console.log(err, data);
         if (err) {
             cb(err, null)
         } else {
             cb(null, data);
         }
     });
-} 
+
+}
 module.exports.res = res;
 module.exports.allres = allres;
+
+
+

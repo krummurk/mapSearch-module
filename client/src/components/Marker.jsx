@@ -6,14 +6,18 @@ class Marker extends React.Component {
         super(props);
         this.state = {
             markerArr: [],
-            infowindowArr: []
+            infowindowArr: [],
+            prev: -1,
+            current: -1
         }
     }
     static getDerivedStateFromProps(props, state) {
         if (props.data.length === 0) {
             return {
                 makerArr: state.markerArr,
-                infowindowArr: state.infowindowArr
+                infowindowArr: state.infowindowArr,
+                prev: state.prev,
+                current: state.current
             };
         }
         const srcImage = 'https://www.zagat.com/assets/img/z-logo-icon-red.svg';
@@ -60,14 +64,16 @@ class Marker extends React.Component {
             google.maps.event.clearInstanceListeners(i);
             i.setMap(null);
         })
-        
+
         state.infowindowArr.forEach(i => {
             i.close();
         })
         state.markerArr.length = 0;
         return {
             markerArr: markerArr,
-            infowindowArr: infowindowArr
+            infowindowArr: infowindowArr,
+            prev: state.current,
+            current: props.currentIndex
         };
     }
 
@@ -75,23 +81,30 @@ class Marker extends React.Component {
     render() {
         const srcImage = 'https://www.zagat.com/assets/img/z-logo-icon-red.svg';
         var currentIndex = this.props.currentIndex;
+        var prevIndex = this.state.prev;
         if (currentIndex > -1) {
-            for (let k = 0; k < this.state.markerArr.length; k++) {
-                this.state.markerArr[k].setIcon(
-                    {
-                        url: srcImage,
-                        scaledSize: new google.maps.Size(20, 20)
-                    });
-            }
+            // for (let k = 0; k < this.state.markerArr.length; k++) {
+            //     this.state.markerArr[k].setIcon(
+            //         {
+            //             url: srcImage,
+            //             scaledSize: new google.maps.Size(20, 20)
+            //         });
+            // }
             this.state.markerArr[currentIndex].setIcon(
                 {
                     url: srcImage,
                     scaledSize: new google.maps.Size(50, 50)
                 });
+            if (prevIndex > -1) {
+                this.state.markerArr[prevIndex].setIcon(
+                    {
+                        url: srcImage,
+                        scaledSize: new google.maps.Size(20, 20)
+                    });
+            }
             this.props.map.panTo(this.state.markerArr[currentIndex].getPosition());
         } else {
             this.props.map.panTo(this.state.markerArr[0].getPosition());
-
         }
         return (
             <div>
