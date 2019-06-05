@@ -16,7 +16,6 @@ import Container from "./MapPanel.jsx"
 var TemplateGoogle = GoogleApiComponent({
   apiKey: GoogleMap_API
 })(Container)
-console.log(TemplateGoogle);
 
 export { TemplateGoogle };
 

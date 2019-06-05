@@ -8,7 +8,7 @@
         "node": ">=6.13.0"
     },
     "scripts": {
-        "react-dev": "webpack -d --watch",
+        "react-dev": "webpack -p",
         "test": "jest",
         "start": "nodemon server/index.js"
     },
@@ -45,6 +45,7 @@
         "enzyme-adapter-react-16": "^1.13.1",
         "eslint-config-hackreactor": "git://github.com/reactorcore/eslint-config-hackreactor",
         "jest": "^24.8.0",
+        "react-addons-perf": "^15.4.2",
         "sinon": "^7.3.2",
         "webpack": "^4.31.0",
         "webpack-cli": "^3.3.2"

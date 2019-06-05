@@ -75,9 +75,7 @@ var res = function(q, cb) {
     });
 }
 var allres = function(n, cb) {
-    console.log(n);
     Restaurant.find({'neighborhood': n}, (err, data) => {
-        console.log(data.length)
         if (err) {
             cb(err, null)
         } else {

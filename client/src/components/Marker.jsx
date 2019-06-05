@@ -11,7 +11,6 @@ class Marker extends React.Component {
     }
     static getDerivedStateFromProps(props, state) {
         if (props.data.length === 0) {
-
             return {
                 makerArr: state.markerArr,
                 infowindowArr: state.infowindowArr
@@ -22,6 +21,7 @@ class Marker extends React.Component {
         var markerArr = [];
         var infowindowArr = [];
         var makeMarker = function (i, idx, cb) {
+            console.log(idx)
             var marker = new google.maps.Marker({
                 position: new google.maps.LatLng(i.latitude, i.longitude),
                 map: map,
@@ -48,7 +48,6 @@ class Marker extends React.Component {
             google.maps.event.addListener(marker, 'mouseout', e => {
                 infowindow.close();
             })
-
             markerArr.push(marker);
             infowindowArr.push(infowindow);
         }
@@ -76,7 +75,7 @@ class Marker extends React.Component {
     render() {
         const srcImage = 'https://www.zagat.com/assets/img/z-logo-icon-red.svg';
         var currentIndex = this.props.currentIndex;
-        if (currentIndex > 0) {
+        if (currentIndex > -1) {
             for (let k = 0; k < this.state.markerArr.length; k++) {
                 this.state.markerArr[k].setIcon(
                     {

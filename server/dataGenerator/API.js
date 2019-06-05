@@ -52,8 +52,6 @@ function getAPI(error, response, data) {
     if (!error && response.statusCode == 200) {
         try {
             data = JSON.parse(data);
-            console.log(data)
-
             var restaruantList = add2Restaurant(data);
             fs.writeFile('res44Tehama' + batchN + '.js', 'var resData =  ', (err, success) => {
                 if (err) {
@@ -67,12 +65,10 @@ function getAPI(error, response, data) {
                     });
                 }
             });
-            console.log('finished saving')
 
             var menuPromise = [];
             for (let j = batchN * 10; j < batchN * 10 + 10; j++) {
                 sleep(200);
-                // console.log('hi')
                 var apiKey = restaruantList[j];
                 var callback = function(resolve, reject, apiKey) {
                     return (error, response, data) => {
@@ -90,7 +86,6 @@ function getAPI(error, response, data) {
                     var apiKey = arr[1];
                     var data = arr[0];
                     data = JSON.parse(data);
-                    console.log(Array.isArray(data));
                     // data is an array 
                     for (let j = 0; j < data.length; j++) {
                         data[j]['resAPI'] = apiKey;
@@ -99,7 +94,6 @@ function getAPI(error, response, data) {
                 })
                 menuPromise.push(p);
             }
-            console.log('whattttt')
             Promise.all(menuPromise).then(data2 => {
                 // fs.writeFile('menus44Tehama.json', data);
                 fs.writeFile('menu44Tehama' + batchN + '.js', 'var menuData = [ ', (err, success) => {

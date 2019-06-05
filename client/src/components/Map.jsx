@@ -9,7 +9,6 @@ class Map extends React.Component {
     this.state = {
       data: this.props.data
     }
-    console.log('current data is ', this.props.data);
     this.loadMap = this.loadMap.bind(this);
 
   }
@@ -195,16 +194,12 @@ class Map extends React.Component {
             }
           ]
       })
-      console.log('Hello')
       this.map = new maps.Map(node, mapConfig);
       this.setState({
           mapCanvas: this.map
         }, () => {
-          console.log('mapcanvas after set state', this.state.mapCanvas)
         }
       );
-      console.log(this.map, this.props.inheritMap)
-      // this.forceUpdate() // do not need this.
     }
   }
 
